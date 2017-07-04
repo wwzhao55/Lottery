@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=750, user-scalable=no" >
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>{$activity['name']}</title>
+    <script src="config.js"></script>
+    <script src="../resource/js/phaser.min.js"></script>
+    <script src="../resource/js/jquery.min.js"></script>
+    <script src="../resource/js/qrcode.js"></script>
+    <script src="../resource/js/main.js" ></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: {$activity['theme_color']};
+        }
+        #Phone {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: {$activity['theme_color']};
+            padding: 0;
+            margin: 0;
+        }
+        .pic_position {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+        }
+        img.phone_title {
+            position: absolute;
+            top: 230px;
+            left: 104px;
+        }
+        .phone_input{
+            background-image: url('../images/input.png');
+            position: absolute;
+            top: 292px;
+            left: 96px;
+            width:548px;
+            height: 71px;
+        }
+        .phone_number {
+            width: 518px;
+            height: 71px;
+            border: none;
+            background-color: transparent;
+            padding-left: 30px;
+            font-size: 30px;
+            color: #fff;
+            line-height: 71px;
+        }
+        img.phone_tip {
+            position: absolute;
+            top: 383px;
+            left: 96px;
+        }
+        img.pull_left {
+            top: 494px;
+            position: absolute;
+            left: 104px;
+        }
+        .pull_right {
+            position: absolute;
+            top: 494px;
+            left: 424px;
+        }
+        #awardlist {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-color: #fee50f;
+        }
+        .rewardTitle {
+            position: absolute;
+            top: 120px;
+            left: 250px;
+        }
+        .wardlist {
+            position: absolute;
+            top: 212px;
+            left: 60px;
+            right: 60px;
+            width: 630px;
+            max-height: 826px;
+            overflow-y: auto;
+        }
+        .item {
+            height: 88px;
+            margin-bottom: 30px;
+            background-color: #fff6cf;
+            border-radius: 10px;
+            padding: 0 30px;
+        }
+        .wardlogo {
+            margin-top: 20px;
+        }
+        .wardtext {
+            position: absolute;
+            left: 150px;
+            font-size: 26px;
+            color: #282828;
+            line-height: 26px;
+            margin: 30px 0;
+        }
+        button.btn-style {
+            position: absolute;
+            right: 30px;
+            width: 242px;
+            height: 50px;
+            border-radius: 10px;
+            margin: 18px 0;
+            font-size: 24px;
+            border: none;
+            padding: 0;
+        }
+        button.btn-style.show-code {
+            color: #a0a0a0;
+            background-color: #dcdcdc;
+        }
+        button.btn-style.click-code {
+            background-color: #fdca01;
+            color: #202020;
+        }
+        img.backindex {
+            position: absolute;
+            top: 1048px;
+            left: 60px;
+        }
+        .btnshare {
+            position: absolute;
+            top: 1048px;
+            right: 60px;
+        }
+        .cover {
+            z-index: 2;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            opacity: 0.3;
+        }
+        .codeback {
+            z-index: 2;
+            position: absolute;
+            top: 290px;
+            left: 175px;
+        }
+        .code-container {
+            top: 490px;
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            left: 235px;
+            background-color: transparent;
+            z-index: 3;
+        }
+        img.btnclose {
+            position: absolute;
+            top: 320px;
+            right: 205px;
+            z-index: 4;
+        }
+        img.qrcode {
+            width: 280px;
+            height: 280px;
+        }
+        .share-tip {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            z-index: 2;
+        }
+        .shareTip {
+            position: absolute;
+            top: 0;
+            left: 572px;
+        }
+        #rule {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: {$activity['theme_color']};
+        }
+        .rule_background {
+            position: absolute;
+            top: 354px;
+            left: 90px;
+            font-size: 20px;
+            color: #282828;
+            width: 570px;
+            height: 652px;
+            margin: 0;
+            border: none;
+            outline: none;
+            background-color: transparent;
+        }
+        #phonePop {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: absolute;
+        }
+        .window {
+            position: absolute;
+            z-index: 120;
+            top: 446px;
+            left: 104px;
+            height: 260px;
+            width: 540px;
+            text-align: center;
+            color: #fff;
+        }
+        .window-title {
+            top: 50px;
+            position: absolute;
+            height: 72px;
+            line-height: 36px;
+            font-size: 20px;
+            left: 65px;
+            right: 65px;
+        }
+        img.phonecancle {
+            position: absolute;
+            bottom: 44px;
+            left: 64px;
+        }
+        img.phonesure {
+            position: absolute;
+            right: 64px;
+            bottom: 44px;
+        }
+    </style>
+</head>
+<body>
+<div id='Phone' style="display: none">
+    <img src='../images//page_back.png' class='pic_position'>
+    <img src='../images//phone.png' class='phone_title'>
+    <div class='phone_input'>
+        <input class='phone_number' type='number'>
+    </div>
+    <img src='../images//phone_tip.png' class='phone_tip'>
+    <img src='../images//btn_cancel.png' class='pull_left'>
+    <img src='../images//btn_confirm.png' class='pull_right'>
+</div>
+<div id="phonePop" hidden>
+    <div class="window">
+        <img src="../images//phonePop.png" id="pop-back">
+        <div class="window-title">
+            老客户请务必与注册一贯账号的手机保持一致<br>手机号一旦输入无法修改
+        </div>
+        <img src="../images/phoneCancle.png" class="phonecancle">
+        <img src="../images/phoneSure.png" class="phonesure">
+    </div>
+</div>
+<div id="rule" hidden>
+    <img src='../images//page_back.png' class='pic_position'>
+    <img src="../images//ruleBg.png" id="rule-pic" style="width: 100%;height: 100%;">
+    <textarea class="rule_background" readonly="readonly">
+{$activity['rule']}
+    </textarea>
+</div>
+<script>
+    var mobile = '<?php echo $mobile ?>';
+    var todayCount = <?php echo $today_count ?>;
+    var inputFocus = false;
+    var openid = "<?php echo $openid ?>";
+    var domain = "{$activity['domain']}";
+    var appid = "{$activity['appid']}";
+    {literal}
+    $('img.pull_right').click(function(){
+        var myreg = /^(((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17([0,1,3]|[6-8]))|(18[0-9]))+\d{8})$/;
+        var phone=$(".phone_number").val();//手机号码
+        if(phone.length==0){
+            alert('请输入手机号');
+        }else if(myreg.test(phone)){
+            $('.cover').show();
+            $('#phonePop').show();
+        }else{
+            alert('手机号格式不正确');
+        }
+    });
+    $('.phonecancle').click(function(){
+        $('.cover').hide();
+        $('#phonePop').hide();
+    })
+    $('.phonesure').click(function(){
+        var phone=$(".phone_number").val();//手机号码
+        $.post('../register.php', {mobile: phone,openid:openid}, function (data) {
+            if (data.status == "success") {
+                mobile = phone;
+                $('#Phone').hide();
+                $('#phonePop').hide();
+                $('.cover').hide();
+            } else {
+                if (data['today_count'] || data['today_count'] === 0) {
+                    mobile = phone;
+                    $('#Phone').hide();
+                    $('#phonePop').hide();
+                    $('.cover').hide();
+                    todayCount = data['today_count'];
+                } else {
+                    alert(data.message);
+                }
+            }
+        }, 'json');
+    })
+    {/literal}
+    var domain = '<?php echo DOMAIN ?>';
+    $.ajax({
+        url: "https://<?php echo API_URL ?>/netBankRequestOne.action?tranCode=WX2155&url="+encodeURIComponent(window.location.href)+"&srcChannel=<?php echo API_CHANNEL ?>",
+        success: function(data) {
+            wx.config({
+                debug: false,
+                appId: '<?php echo APPID ?>',
+                timestamp: data.timestamp,
+                nonceStr: data.nonceStr,
+                signature: data.signature,
+                jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
+            });
+            wx.ready(function () {
+                wx.onMenuShareTimeline({
+                    title: '{$activity['sharetitle']}', // 分享标题
+                    link: 'https://'+domain+'/', // 分享链接
+                    imgUrl: 'https://'+domain+'/'+'{$activity['shareimg']}', // 分享图标
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+                wx.onMenuShareAppMessage({
+                    title: '{$activity['sharetitle']}', // 分享标题
+                    desc: '{$activity['sharedesc']}', // 分享描述
+                    link: 'https://'+domain+'/', // 分享链接
+                    imgUrl: 'https://'+domain+'/'+'{$activity['shareimg']}', // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            });
+        },
+        dataType: "jsonp"
+    });
+
+    $('img.pic_position').click(function () {
+        setTimeout(function () {
+            $('#Phone').hide();
+            $('#awardlist').hide();
+            $('#rule').hide();
+        }, 1000);
+    });
+
+    $('img.pull_left').click(function () {
+        setTimeout(function () {
+            $('#Phone').hide();
+        }, 1000);
+    });
+</script>
+</body>
+</html>

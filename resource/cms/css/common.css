@@ -1,0 +1,132 @@
+.lottery_contianer{
+	width: 100%;
+	height: 100%;
+	padding-top: 40px;
+	padding-left: 140px;
+	padding-bottom: 100px;
+	background: #fbf0ee;
+	font-family: 'Microsoft YaHei';
+	color: #404040;
+}
+#award_edit{
+	display: none;
+}
+.input_title{
+	min-width: 150px;
+	font-size: 18px;
+	height: 80px;
+	padding-bottom: 40px;
+}
+.input_part{
+	min-width: 404px;
+	height:80px;
+	padding-bottom: 40px;
+}
+.input_part input{
+	width: 100%;
+	height: 100%;
+	border-radius: 8px;
+	border:1px solid #d1af94;
+	padding-left: 28px;
+	font-size: 16px;
+}
+.input_part textarea{
+	width: 100%;
+	height: 100%;
+	border-radius: 8px;
+	border:1px solid #d1af94;
+	padding: 10px;
+	font-size: 16px;
+}
+.input_part input,.input_part select{
+	width: 100%;
+	height: 100%;
+	border-radius: 8px;
+	border:1px solid #d1af94;
+	background: #fff;
+}
+#award_detail .input_title,#award_detail .input_part{
+	height: 240px;
+	vertical-align: top;
+}
+#award_edit .input_part img{
+    height: 300px;
+    width: 300px;
+    border-radius: 8px;
+    border:1px solid #d1af94;
+}
+#award_edit .input_part p,#award_list p{
+	color: #666;
+	padding-top: 10px;
+	font-size: 14px;
+}
+#award_img .input_part button{
+	margin-left: 100px;
+	margin-top: 10px;
+	display: block;
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+    vertical-align: middle;
+    border-radius: 8px;
+    color: #fff;
+    background: #d1af94;
+    outline: none;
+    border:none;
+    z-index: 1;
+    cursor: pointer;
+}
+#pic_input{
+    height: 40px;
+    width: 100px;
+	margin-left: 100px;
+	margin-top: -40px;
+	opacity: 0;
+}
+#award_img .input_title,#award_img .input_part{
+	height: 450px;
+	vertical-align: top;
+}
+.btn_common{
+	width: 248px;
+	height: 60px;
+    font-size: 24px;
+    vertical-align: middle;
+    border-radius: 8px;
+    color: #fff;
+    background: #d1af94;
+    outline: none;
+    border:none;
+    margin-right: 60px;
+    cursor: pointer;
+}
+#award_list td{
+	min-width: 152px;
+	height: 60px;
+	border: 1px solid #d1af94;
+	text-align: center;
+}
+#award_list .list_title td{
+	height: 70px;
+}
+#award_list .list_code{
+	min-width: 80px;
+}
+#award_list .list_name{
+	min-width: 142px;
+}
+#award_list .list_pic{
+	min-width: 120px;
+}
+#award_list .list_pic img{
+	width: 50px;
+	height: 50px;
+}
+#award_list .list_common{
+	min-width: 152px;
+}
+#award_list .list_edit{
+	min-width: 102px;
+	color: #d1af94;
+	cursor: pointer;
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>转盘活动</title>
+	<link rel="stylesheet" type="text/css" href="../resource/plugin/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../resource/cms/css/common.css">
+	<link rel="stylesheet" type="text/css" href="../resource/cms/css/cms.css">
+	<script src='../resource/js/jquery.min.js'></script>
+	<script src='../resource/plugin/bootstrap/js/bootstrap.min.js'></script>
+	<script src='../resource/plugin/laydate/laydate.js'></script>
+	<script src='../resource/plugin/laypage/laypage.js'></script>
+	<link rel="stylesheet" type="text/css" href="../resource/style.css">
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<?php require '../resource/cms/header.html' ;?>
+		</div>
+		<div id="left" style="width: 180px;float: left;">
+			<div id="sider" >
+				<?php require '../resource/cms/sider.html' ?>
+			</div>
+		</div>
+		<div id="right" style="width: 85%;float: left;">			
+			<div id="main" >
+				<?php echo $main_html ?>
+			</div>			
+		</div>
+	</div>
+	<div id='cover' hidden></div>
+	<div id='change-code' hidden>
+		<form class="setter-form" role="form" id="change_form">
+			<img src='../images/cms/login-close.png' class='btnClose'>
+			<div class='change-title'>修改密码</div>
+			<div class='change-list'>
+				<span class='change-label'>账号：</span>
+				<input class='input-style' type='text' readonly='readonly' value='admin'>
+			</div>
+			<div class='change-list'>
+				<span class='change-label'>原始密码：</span>
+				<input class='input-style' type="password" name='old_password'>
+			</div>
+			<div class='change-list'>
+				<span class='change-label'>修改密码：</span>
+				<input class='input-style'type="password" name='new_password'>
+			</div>
+			<div class='change-list'>
+				<span class='change-label'>确认密码：</span>
+				<input class='input-style' type="password" name='re_new_password'>
+			</div>
+			<input type="button" id="submit" value='确定修改' style='margin-right:68px;'>
+			<div class='error-tip' hidden></div>
+		</form>
+	</div>	
+</body>
+</html>
+<script type="text/javascript">
+var height = document.getElementById("right").offsetHeight;
+var offsetHeight = window.screen.height;
+console.log(offsetHeight);
+$('#cover').css('height',height);
+$('#left').css('height',height);
+$('#cover').css('height',offsetHeight);
+$('#left').css('min-height',offsetHeight);
+$('.modify').click(function(){
+	$('#cover').show();
+	$('#change-code').show();
+	document.body.scrollTop = 0;
+});
+$('.btnClose').click(function(){
+	$('#cover').hide();
+	$('#change-code').hide();
+});
+$('#submit').click(function(){
+		if($("input[name='old_password']").val().length==0){
+			$('.error-tip').html('请输入原始密码').show();
+		}else if($("input[name='new_password']").val().length==0){
+			$('.error-tip').html('请输入新密码').show();
+		}else if($("input[name='new_password']").val()!=$("input[name='re_new_password']").val()){
+			$('.error-tip').html('两次输入密码不一致').show();
+		}else{
+			$('.error-tip').html('').hide();
+			console.log($("input[name='old_password']").val());
+			var formData = new FormData($('#change_form')[0]);
+			console.log($('#change_form'));
+			$.ajax({
+			        url: 'repassword.php',
+			        data: formData,
+			        processData: false,
+			        contentType: false,
+			        type: 'POST',
+			        dataType:'json',
+			        success:function(data){
+			        	if(data.status == "success"){
+			        		alert('修改成功')
+			        		window.location.href = 'login.php'
+			        	}else{
+			        		alert(data.message);
+			        	}
+			        }
+			});
+		}
+})
+</script>

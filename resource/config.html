@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>数据库配置</title>
+    <script src='../resource/js/jquery.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="../resource/style.css">
+</head>
+<body>
+<div id='sqlPage'>
+    <form>
+        <div class='login-title' style='padding-top:38px;'>数据库配置</div>
+        <div class='item'>
+            <span style='width: 120px;'>数据库地址：</span><input type="text" name="host" id="host" class='input-style'>
+        </div>
+        <div class='item'>
+                <span style='width: 120px;'>数据库端口：</span><input type="text" name="pot" id="port" class='input-style'>
+            </div>
+        <div class='item'>
+            <span style='width: 120px;'>数据库名：</span><input type="text" name="name" id="name" class='input-style'>
+        </div>
+        <div class='item'>
+            <span style='width: 120px;'>用户名：</span><input type="text" name="user" id="user" class='input-style'>
+        </div>
+        <div class='item'>
+            <span style='width: 120px;'>密码：</span><input type="password" name="db_password" id="db_password" class='input-style'>
+        </div>
+        <input type="button" id="submit" value='提交' style='margin-right:60px;'>
+    </form>
+</div>
+<script>
+
+
+    $('#submit').click(function(){
+        var dbhost = $('#host').val();
+        var dbname = $('#name').val();
+        var account = $('#user').val();
+        var password = $('#db_password').val();
+        var port = $('#port').val();
+        $.post('config.php',{dbhost: dbhost, dbname: dbname, username:account, password:password,dbport:port},function(data){
+            data = JSON.parse(data);
+            if(data.status=='success'){
+                location.href = 'login.php'
+            }else{
+                alert(data.message);
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

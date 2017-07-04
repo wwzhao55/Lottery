@@ -1,0 +1,119 @@
+<script src='../resource/cms/js/award.js'></script>
+<div class="lottery_contianer" id="award_edit">
+	<form id="form_edit">
+		<table>
+			<tr>
+				<td class="input_title">
+					奖品名称：
+				</td>
+				<td class="input_part">
+					<input type="text" name="name">
+				</td>
+			</tr>
+			<tr id="award_img">
+				<td class="input_title">
+					奖品图片：
+				</td>
+				<td class="input_part">
+					<img src="">
+					<p>图片尺寸为90*90</p>
+					
+					<button type="button">修改</button>
+					<input type="file" name="img" id="pic_input"  onchange="changePic(this)">
+				</td>
+			</tr>
+			<tr>
+				<td class="input_title">
+					奖品详情名称：
+				</td>
+				<td class="input_part">
+					<input type="text" name="detail">
+					<p>请控制文本长度</p>
+				</td>
+			</tr>
+			<tr id="award_detail">
+				<td class="input_title">
+					奖品详情内容：
+				</td>
+				<td class="input_part">
+					<textarea name="desc" id="textarea"></textarea>
+					<p>请控制文本长度</p>
+				</td>
+			</tr>
+			<tr id="have_award">
+				<td class="input_title">
+					是否有奖：
+				</td>
+				<td class="input_part">
+					<select name='flag'>
+						<option value="0">无</option>
+						<option value="1">有</option>
+					</select>
+					<p>本属性表示当前格子中的是『奖品』还是『谢谢』，与最多中奖次数相关</p>
+				</td>
+			</tr>
+			<tr>
+				<td class="input_title">
+					中奖概率：
+				</td>
+				<td class="input_part">
+					<input type="text" name="chance">
+				</td>
+			</tr>
+			<tr>
+				<td class="input_title">
+					奖品数量：
+				</td>
+				<td class="input_part">
+					<input type="text" name="total">
+				</td>
+			</tr>
+			<tr>
+				<td class="input_title">
+					获奖规则：
+				</td>
+				<td class="input_part">
+					<textarea name="get_rule" id="award_rule"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td class="input_title">
+					获奖地址：
+				</td>
+				<td class="input_part">
+					<input type="text" name="get_url">
+					<p>请完整填写URL地址，包括http://或https://部分</p>
+				</td>
+			</tr>
+			<tr>
+				<td class="input_title">
+					导入兑奖码TXT文件：
+				</td>
+				<td class="input_part">
+					<input type="file" name="redeem_code" onchange="chooseTxt()">
+					<p>兑奖码：TXT一行为一个兑奖码，上传新文件会在原文件上追加</p>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<button class="btn_common" onclick="cancel()">取消</button>
+	<button class="btn_common" onclick="saveEdit()">确定</button>
+</div>
+<div class="lottery_contianer" id="award_list" style="padding-top: 126px;padding-left: 60px;">
+	<table>
+		<tr class="list_title">
+			<td class="list_code">序号</td>
+			<td class="list_name">名称</td>
+			<td class="list_pic">图片</td>
+			<td class="list-common">是否有奖</td>
+			<td class="list-common">中奖概率%</td>
+			<td class="list-common">奖品数量</td>
+			<td class="list-common">已领取奖品数</td>
+			<td class="list-edit" style="color: #404040;">操作</td>
+		</tr>
+	</table>
+	<p>注*序号为从转盘左上角顺时针排序,请确保中奖概率%之和为100</p>
+</div>
+<script>
+	$('#sider-award').addClass('active');
+</script>

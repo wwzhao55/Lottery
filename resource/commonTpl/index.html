@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var ua = navigator.userAgent.toLowerCase();
+    var appid = "{$activity['appid']}";
+    var redirect_url = 'https://' + "{$activity['domain']}" + '/weixin/auth.php';
+    if (/micromessenger/.test(ua)) {
+        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ appid +'&redirect_uri=' + redirect_url + '&response_type=code&scope=snsapi_base&state=#wechat_redirect';
+    } else {
+        location.href = 'h5/index.html';
+    }
+</script>
+</body>
+</html>

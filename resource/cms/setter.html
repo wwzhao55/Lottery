@@ -1,0 +1,86 @@
+
+<div id='setter'>
+<form class="setter-form" role="form" id="setter-form">
+	<div class='setter-div'>
+		<span>每人每日抽奖次数：</span>
+		<input class='input-style width' type='number' name='person_day_times' onblur="control(this,1)">
+		<p style="color:red; margin-left:250px;margin-top:5px">活动开始后请勿更改，最大次数为99次</p>
+	</div>
+	<div class='setter-div'>
+		<span>每人总抽奖次数：</span>
+		<input class='input-style width' type='number' name='person_total_times' onblur="control(this,2)">
+		<p style="color:red; margin-left:250px;margin-top:5px">活动开始后请勿更改，最大次数为120次</p>
+	</div>
+	<div class='setter-div'>
+		<span>每人最多中奖次数：</span>
+		<input class='input-style width' type='number' name='person_max_times' onblur="control(this,3)">
+		<p style="color:red; margin-left:250px;margin-top:5px">活动开始后请勿更改，最大次数为120次</p>
+	</div>
+	<input type='button' class='btn btn-left' value='更新设置'>
+	<input type='button' class='btn btn-right' value='放弃更新'>
+</form>
+</div>
+<script>
+	$('#sider-setter').addClass('active');
+	var height = document.getElementById("right").offsetHeight;
+	$('#left').css('height',height);
+	function GetData(){
+		$.get('setter.php',function(data){
+			data = JSON.parse(data);
+			if(data.status=='success'){
+				$('input[name="person_day_times"]').val(data.data.person_day_times);
+				$('input[name="person_total_times"]').val(data.data.person_total_times);
+				$('input[name="person_max_times"]').val(data.data.person_max_times);
+			}else{
+				alert(data.message)
+			}
+		})
+	}
+	GetData();
+	$('.btn-left').click(function(){
+		var formData = new FormData($('#setter-form')[0]);
+		$.ajax({
+		        url: 'setter.php',
+		        data: formData,
+		        processData: false,
+		        contentType: false,
+		        type: 'POST',
+		        dataType:'json',
+		        success:function(data){
+		        	if(data.status == "success"){
+		        		alert('更新成功')
+		        	}else{
+		        		alert(data.message);
+		        	}
+		        }
+		});
+	});
+	$('.btn-right').click(function(){
+		GetData();
+	})
+	function control(obj,num){
+		console.log(parseInt(num))
+		switch(parseInt(num)){
+            case 1:
+                if ($(obj).val()>99) {
+                	alert('次数不得超过99次');
+                	$(obj).val(99)
+                	break;
+                }
+            case 2:
+                if ($(obj).val()>120) {
+                	alert('次数不得超过120次')
+                	$(obj).val(120)
+                	break;
+                }
+            case 3:
+                if ($(obj).val()>120) {
+                	alert('次数不得超过120次')
+                	$(obj).val(120)
+                	break;
+                }
+        }
+	}
+
+
+</script>

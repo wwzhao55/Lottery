@@ -1,0 +1,230 @@
+<div class='page-title'>大转盘活动设置</div>
+<form class="activity" role="form" id="activity">
+	<div class='page-container'>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:105px;'>活动状态:</span>
+				<span class='radio-item'><img src='../images/cms/check.png' class='img-list' id='0'>结束</span>
+				<span class='radio-item'><img src='../images/cms/check.png' class='img-list' id='1'>开始</span>
+				<span class='radio-item' style="color:red;"><img src='../images/cms/check.png' class='img-list' id='2'>故障 请保证奖品设置中概率之和为100</span>
+		</div>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:105px;'>活动名称:</span>
+			<input type='text' name='name' class='activity-name input-style'>
+			<span class='warning-tip'>请控制文本长度</span>
+		</div>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:105px;'>活动时间:</span>
+			<span>
+				<input type='text' id='start-time' class='input-style'>
+				<img src='../images/cms/down.png'class='down' style='left:-75px;'>
+			</span>
+			<span>
+				<input type='text' id='end-time' class='input-style'>
+				<img src='../images/cms/down.png'class='down' style='left:-40px;'>
+			</span>
+		</div>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:110px;'>作弊人数:</span>
+			<input type='text' name='addon' class='activity-number input-style' style='width:404px;'>
+			<span class='warning-tip'>预留参数，暂未使用</span>
+		</div>
+		
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:110px;'>部署域名:</span>
+			<input type='text' class='input-style' name='domain' style='width:404px;'>
+			<span class='warning-tip'>例：sp.dg.com/lottery</span>
+		</div>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:118px;'>api_url:&nbsp;</span>
+			<input type='text' class='input-style' name='api_url' style='width:404px;'>
+			<span class='warning-tip'>微信js-sdk接口</span>
+		</div>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:118px;'>APPID:&nbsp;</span>
+			<input type='text' class='input-style' name='appid' style='width:404px;'>
+			<span class='warning-tip'>微信的appid</span>
+		</div>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:70px;'>API_Channel:</span>
+			<input type='text' class='channel input-style' name='api_channel' style='width:404px;'>
+			<span class='warning-tip'>请填写WX或WS</span>
+		</div>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:105px;'>活动规则:</span>
+			<textarea class='activity-rule input-style' name='rule'></textarea>
+			<span class='warning-tip'>请控制文本长度</span>
+		</div>
+
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:70px;'>没有中奖提示:</span>
+			<textarea class='activity-item fake_notice input-style' name='fake_notice'></textarea>
+			<span class='warning-tip'>请控制文本长度</span>
+		</div>
+		
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:0px;'>今日没有抽奖次数提示:</span>
+			<textarea class='activity-item count_notice input-style' name='today_no_count_notice'></textarea>
+			<span class='warning-tip'>请控制文本长度</span>
+		</div>
+
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:90px;'>主题背景色:</span>
+			<input type='text' class='activity-main input-style' name='theme_color'>
+			<span class='warning-tip'>例：#fee50f</span>
+		</div>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:90px;'>首页标题色:</span>
+			<input type='text' class='activity-title input-style' name='title_color'>
+			<span class='warning-tip'>例：#3c5dff</span>
+		</div>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:105px;'>分享标题:</span>
+			<input type='text' name='sharetitle' class='input-style' style='width:404px;'>
+			<span class='warning-tip'>请控制文本长度</span>
+		</div>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:105px;'>分享描述:</span>
+			<input type='text' name='sharedesc' class=' input-style' style='width:404px;'>
+			<span class='warning-tip'>请控制文本长度</span>
+		</div>
+		<div class='content-list'>
+			<span class='span-name' style='margin-right:105px;'>分享图片:</span>
+			<div id='img-show'><img src='../images/add.png' class='image'></div>
+			<input type='file' style='display:none;' name='shareimg' class='img-upload' onchange="changePic(this)">
+			<span class='warning-tip'>点击图片上传方形图片</span>
+		</div>
+		<input hidden type='number' id='id'>
+		<input hidden id='status' name='status'>
+		<input type='button' class='btn btn-left' value='更新设置'>
+		<input type='button' class='btn btn-right' value='放弃更新'>
+	</div>
+</form>
+<script>
+	$('#sider-activity').addClass('active');
+	var height = document.getElementById("right").offsetHeight;
+	$('#left').css('height',height);
+
+	$('.img-list').click(function(){
+		$('.img-list').attr('src','../images/cms/check.png');
+		$(this).attr('src','../images/cms/checked.png');
+		var a = $(this).attr('id');
+		$('#status').val(a);
+	})
+	laydate({
+            elem: '#start-time',
+            format: 'YYYY-MM-DD',
+            event:'focus',
+            festival: true, //显示节日
+           // istime: true,
+            choose: function(datas) {
+                //选择日期完毕的回调
+                var timeshow = datas;
+                var timestamp2 = Date.parse(new Date(timeshow));
+                timestamp2 = timestamp2 / 1000;
+            }
+    });
+    laydate({
+            elem: '#end-time',
+            format: 'YYYY-MM-DD',
+            event:'focus',
+            festival: true, //显示节日
+           // istime: true,
+            choose: function(datas) {
+                //选择日期完毕的回调
+                var timeshow = datas;
+                var timestamp2 = Date.parse(new Date(timeshow));
+                timestamp2 = timestamp2 / 1000;
+            }
+    });
+    function add0(m){return m<10?'0'+m:m }
+	function format(date)
+	{
+		var time = new Date(parseInt(date*1000));
+		var y = time.getFullYear();
+		var m = time.getMonth()+1;
+		var d = time.getDate();
+		var h = time.getHours();
+		var mm = time.getMinutes();
+		var s = time.getSeconds();
+		return y+'-'+add0(m)+'-'+add0(d);
+	}
+	function GetData(){
+		$.get('activity.php',function(data){
+			data = JSON.parse(data);
+			if(data.status=='success'){
+				var radio = $('.img-list');
+				$.each(radio,function(i,val){
+					if($(this).attr('id')==data.data.status){
+						$(this).click();
+					}
+				})
+				$('#status').val(data.data.status);
+				$('#id').val(data.data.id);
+				$('.activity-name').val(data.data.name);
+				$('#start-time').val(format(data.data.start));
+				$('#end-time').val(format(data.data.end));
+				$('.activity-number').val(data.data.addon);
+				$('.activity-rule').val(data.data.rule);
+				$('.activity-main').val(data.data.theme_color);
+				$('.activity-title').val(data.data.title_color);
+				$('input[name="domain"]').val(data.data.domain);
+				$('input[name="api_url"]').val(data.data.api_url);
+				$('input[name="appid"]').val(data.data.appid);
+				$('.channel').val(data.data.api_channel);
+				$('.count_notice').val(data.data.today_no_count_notice);
+				$('.fake_notice').val(data.data.fake_notice);
+				$('input[name="sharetitle"]').val(data.data.sharetitle);
+				$('input[name="sharedesc"]').val(data.data.sharedesc);
+				if(data.data.shareimg){
+					$('.image').attr('src','../'+data.data.shareimg);
+				}else{
+					$('.image').attr('src','../images/add.png');
+				}
+				
+			}else{
+				alert(data.message);
+			}	
+		})
+	}
+	GetData();
+	$('.btn-left').click(function(){
+		var formData = new FormData($('#activity')[0]);
+		var startTime = Date.parse(new Date($('#start-time').val()))/1000;
+		var endTime = Date.parse(new Date($('#end-time').val()))/1000;
+		formData.append('start',startTime);
+		formData.append('end',endTime);
+		$.ajax({
+		        url: 'activity.php',
+		        data: formData,
+		        processData: false,
+		        contentType: false,
+		        type: 'POST',
+		        dataType:'json',
+		        success:function(data){
+		        	if(data.status == "success"){
+		        		alert('更新成功')
+		        	}else{
+		        		alert(data.message);
+		        	}
+		        }
+		});
+	})
+	$('.btn-right').click(function(){
+		GetData();
+	});
+	$('.image').click(function(){
+		$('.img-upload').click();
+	})
+	function changePic(source){
+		var file = source.files[0];
+		if(window.FileReader) {
+			var fr = new FileReader();
+			fr.onloadend = function(e) {
+			    console.log(e.target.result);
+			    $('.image').attr('src',e.target.result);
+			};
+			fr.readAsDataURL(file);
+		}
+	}
+</script>
+				

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录</title>
+	<script src='../resource/js/jquery.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="../resource/style.css">
+</head>
+<body>
+	<div id='loginPage'>
+		<form>
+			<div class='login-title'>登录</div>
+			<div class='item'>
+				<span>账号：</span><input type="text" name="account" id="account" class='input-style'>
+			</div>
+			<div class='item'>
+				<span>密码：</span><input type="password" name="password" id="password" class='input-style'>
+			</div>
+			<input type="button" id="submit" value='登录'>
+		</form>
+	</div>
+
+	<div id='sqlPage' style='display:none;'>
+		<form>
+			<div class='login-title' style='padding-top:88px;'>数据库配置</div>
+			<div class='item'>
+				<span style='width: 120px;'>数据库地址：</span><input type="text" name="host" id="host" class='input-style'>
+			</div>
+			<div class='item'>
+				<span style='width: 120px;'>数据库端口：</span><input type="text" name="pot" id="port" class='input-style'>
+			</div>
+			<div class='item'>
+				<span style='width: 120px;'>数据库名：</span><input type="text" name="name" id="name" class='input-style'>
+			</div>
+			<div class='item'>
+				<span style='width: 120px;'>用户名：</span><input type="text" name="user" id="user" class='input-style'>
+			</div>
+			<div class='item'>
+				<span style='width: 120px;'>密码：</span><input type="password" name="db_password" id="db_password" class='input-style'>
+			</div>
+			<input type="button" id="bd_submit" value='登录' style='margin-right:45px;'>
+		</form>
+	</div>
+<script>
+	
+
+	$('#submit').click(function(){
+		var account = $('#account').val();
+		var password = $('#password').val();
+		console.log(account);
+		console.log(password);
+		$.post('login.php',{account:account,password:password},function(data){
+			data = JSON.parse(data);
+			if(data.status=='success'){
+				location.href = 'activity.php'
+			}else{
+				alert(data.message);
+			}
+		});
+	});
+	
+</script>
+</body>
+</html>

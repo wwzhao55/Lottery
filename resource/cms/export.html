@@ -1,0 +1,72 @@
+<div class='page-title'>大转盘获奖名单 <a href="export.php?export=1"><button class="exportBtn">导出数据</button></a></div>
+
+<table id="aword-list" style="width:100%;">
+	<thead>
+		<tr>
+			<th>奖品名称</th>
+			<th>手机号</th>
+			<th>兑换码</th>
+			<th>获奖时间</th>
+		</tr>
+	</thead>
+	<tbody id="nameList">
+	</tbody>
+</table>
+<div id="nodata" hidden>暂无数据</div>
+<div id="pagnation" style="text-align: center;"></div>
+<script type="text/javascript">
+	$('#sider-export').addClass('active');
+	var height = document.getElementById("right").offsetHeight;
+	$('#left').css('height',height);
+	function InitList(page){
+		$.ajax({
+		    url: 'export.php',
+		    data:{
+		    	page:page
+		    },
+		    type: 'GET',
+		    dataType:'json',
+		    success:function(data){
+		    	$('#nameList').html('');
+				if (data.status=='success') {
+					$.each(data.data,function(key,value){        	
+		            	var name="<td class='list_name'>"+value.award_name+"</td>";
+		            	var openid="<td class='list_common'>"+value.mobile+"</td>";
+		            	var code="<td class='list_common'>"+value.code+"</td>";
+		            	var time="<td class='list_edit'>"+format(value.time)+"</td>";
+		            	var content = '<tr>'+name+openid+code+time+'</tr>';
+		            	$('#nameList').append(content);
+					});
+					laypage({
+						cont: 'pagnation', //容器。值支持id名、原生dom对象，jquery对象,
+						pages: Math.ceil(data.count/10), //总页数
+						curr: page,
+						first: false,
+						last: false,
+						jump: function(obj,first){
+							    if(!first){
+							    	InitList(obj.curr);
+							    }
+						}
+					});
+				}else{
+					console.log(data);
+					$('#nodata').show();
+				}
+			}
+		});
+	}
+	InitList(1);
+	function add0(m){return m<10?'0'+m:m }
+	function format(date)
+	{
+		var time = new Date(parseInt(date*1000));
+		var y = time.getFullYear();
+		var m = time.getMonth()+1;
+		var d = time.getDate();
+		var h = time.getHours();
+		var mm = time.getMinutes();
+		var s = time.getSeconds();
+		return y+'-'+add0(m)+'-'+add0(d);
+	}
+</script>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=750, user-scalable=no" >
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>{$activity['name']}</title>
+    <script src="config.js"></script>
+    <script src="../resource/js/jquery.min.js"></script>
+    <script src="../resource/js/qrcode.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: {$activity['theme_color']};
+        }
+        #Phone {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: {$activity['theme_color']};
+            padding: 0;
+            margin: 0;
+        }
+        .pic_position {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+        }
+        img.phone_title {
+            position: absolute;
+            top: 230px;
+            left: 104px;
+        }
+        .phone_input{
+            background-image: url('../images/input.png');
+            background-size: cover;
+            position: absolute;
+            top: 292px;
+            left: 96px;
+        }
+        .phone_number {
+            width: 548px;
+            height: 71px;
+            border: none;
+            background-color: transparent;
+            padding-left: 30px;
+            font-size: 30px;
+            color: #fff;
+            line-height: 71px;
+        }
+        img.phone_tip {
+            position: absolute;
+            top: 383px;
+            left: 96px;
+        }
+        img.pull_left {
+            top: 494px;
+            position: absolute;
+            left: 104px;
+        }
+        .pull_right {
+            position: absolute;
+            top: 494px;
+            left: 424px;
+        }
+        #awardlist {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .rewardTitle {
+            position: absolute;
+            top: 120px;
+            left: 250px;
+        }
+        .wardlist {
+            position: absolute;
+            top: 212px;
+            left: 60px;
+            right: 60px;
+            width: 630px;
+            max-height: 826px;
+            overflow-y: auto;
+        }
+        .item {
+            height: 88px;
+            margin-bottom: 30px;
+            background-color: #fff6cf;
+            border-radius: 10px;
+            padding: 0 30px;
+        }
+        .wardlogo {
+            margin-top: 8px;
+            width: 72px;
+            height: 72px;
+            border-radius: 4px;
+        }
+        .wardtext {
+            position: absolute;
+            left: 150px;
+            font-size: 26px;
+            color: #282828;
+            line-height: 26px;
+            margin: 30px 0;
+        }
+        button.btn-style {
+            position: absolute;
+            right: 30px;
+            width: 252px;
+            height: 50px;
+            border-radius: 10px;
+            margin: 18px 0;
+            font-size: 24px;
+            border: none;
+            padding: 0;
+        }
+        button.btn-style.show-code {
+            color: #a0a0a0;
+            background-color: #dcdcdc;
+        }
+        button.btn-style.click-code {
+            background-color: #fdca01;
+            color: #202020;
+        }
+        img.backindex {
+            position: absolute;
+            top: 1048px;
+            left: 60px;
+        }
+        .btnshare {
+            position: absolute;
+            top: 1048px;
+            right: 60px;
+        }
+        .cover {
+            z-index: 2;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            opacity: 0.3;
+        }
+        .codeback {
+            z-index: 2;
+            position: absolute;
+            top: 290px;
+            left: 175px;
+        }
+        .code-container {
+            top: 490px;
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            left: 235px;
+            background-color: transparent;
+            z-index: 3;
+        }
+        img.btnclose {
+            position: absolute;
+            top: 320px;
+            right: 205px;
+            z-index: 4;
+        }
+        img.qrcode {
+            width: 280px;
+            height: 280px;
+        }
+        .share-tip {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            z-index: 2;
+        }
+        .shareTip {
+            position: absolute;
+            top: 0;
+            left: 572px;
+        }
+        #coupon {
+            z-index: 5;
+            position: relative;
+            width: 510px;
+            height: 820px;
+            margin: 190px auto;
+            background-color: #3c5dff;
+            border-radius: 50px;
+            text-align: center;
+        }
+        img.top-pic {
+            position: absolute;
+            top: 60px;
+            left: 195px;
+        }
+        img.couponClose {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+        }
+        img.coupon-change {
+            position: absolute;
+            bottom: 40px;
+            left: 115px;
+        }
+        .coupon-title {
+            color: #fff;
+            font-size: 30px;
+            padding-top: 202px;
+            padding-bottom: 30px;
+        }
+        textarea.text-rule {
+            background: transparent;
+            border: none;
+            resize: none;
+            width: 390px;
+            padding: 0 60px;
+            color: #fff;
+            font-size: 20px;
+            /*position: absolute;*/
+            height: 400px;
+            outline: none;
+        }
+        textarea.qrcode {
+            width: 60%;
+            height: 140px;
+            background-color: transparent;
+            border: navajowhite;
+            resize: none;
+            outline: navajowhite;
+            color: #fff;
+            font-size: 26px;
+            line-height: 30px;
+            text-align: center;
+            padding-top: 50px;
+            margin: 0 20%;
+        }
+        button.btn-style.couponWay {
+            background-color: #fdca01;
+        }
+        img.couponWay {
+            margin-left: -20px;
+        }
+    </style>
+</head>
+<body>
+<div id='awardlist'>
+    <img src='../images//page_back.png' class='pic_position'>
+    <img src='../images//rewardTitle.png' class='rewardTitle'>
+    <div class='wardlist'>
+    </div>
+    <img src='../images//btnBack.png' class='backindex'>
+    <img src='../images//btnShare.png' class='btnshare'>
+</div>
+<!-- 生成二维码 -->
+<div class='cover cover1' hidden></div>
+<div class='qrcode-pop' hidden>
+    <img src='../images//btnClose.png' class='btnclose'>
+    <img src='../images//qrcodeBg.png' class='codeback'>
+    <div class='code-container'>
+        <textarea class="qrcode" readonly="readonly"></textarea>
+        <img class="couponWay" src="../images//btnUse.png">
+        <span class="awardId" hidden></span>
+    </div>
+</div>
+<div class='share-tip' hidden>
+    <img src='../images//shareTip.png' class='shareTip'>
+</div>
+<div class='cover cover2' hidden></div>
+<div id="coupon" hidden>
+    <img src="../images//chicken.png" class="top-pic">
+    <img src="../images//btnClose.png" class="couponClose">
+    <div class="coupon-title">兑换券使用方法</div>
+    <textarea id="rule1" class="text-rule" readonly="readonly">
+{$awards[0]['get_rule']}
+    </textarea>
+    <textarea id="rule2" class="text-rule" readonly="readonly">
+{$awards[1]['get_rule']}
+    </textarea>
+    <textarea id="rule3" class="text-rule" readonly="readonly">
+{$awards[2]['get_rule']}
+    </textarea>
+    <textarea id="rule4" class="text-rule" readonly="readonly">
+{$awards[3]['get_rule']}
+    </textarea>
+    <textarea id="rule5" class="text-rule" readonly="readonly">
+{$awards[4]['get_rule']}
+    </textarea>
+    <textarea id="rule6" class="text-rule" readonly="readonly">
+{$awards[5]['get_rule']}
+    </textarea>
+    <textarea  id="rule7" class="text-rule" readonly="readonly">
+{$awards[6]['get_rule']}
+    </textarea>
+    <textarea  id="rule8" class="text-rule" readonly="readonly">
+{$awards[7]['get_rule']}
+    </textarea>
+    <img src="../images//btnExchange.png" class="coupon-change">
+</div>
+<script>
+    var selectId; 
+    var domain = "{$activity['domain']}";
+    var awardList = <?php echo $awardList ?>;
+    $.each(awardList,function(i,val){
+        if(awardList[i].code.length<9){
+            var ele = '<div class="item">'+
+                '<img src="../'+awards[awardList[i].award_id - 1].image+'" class="wardlogo">'+
+                '<span class="wardtext">'+awards[awardList[i].award_id - 1].name+'</span>'+
+                '<span class="awardId" hidden>'+awardList[i].award_id+'</span>'+
+                '<button class="btn-style show-code">兑换码：'+ awardList[i].code+'</button>'+
+                '</div>';
+            $('.wardlist').append(ele);
+        }else{
+            var ele = '<div class="item">'+
+                '<img src="../'+awards[awardList[i].award_id - 1].image+'" class="wardlogo">'+
+                '<span class="wardtext">'+awards[awardList[i].award_id - 1].name+'</span>'+
+                '<span class="codenumber" hidden>兑换码：'+awardList[i].code+'</span>'+
+                '<button class="btn-style click-code">显示兑换码</button>'+
+                '<span class="awardId" hidden>'+awardList[i].award_id+'</span>'+
+                '</div>';
+            $('.wardlist').append(ele);
+        }
+    });
+    var domain = '<?php echo DOMAIN ?>';
+    $.ajax({
+        url: "https://<?php echo API_URL ?>/netBankRequestOne.action?tranCode=WX2155&url="+encodeURIComponent(window.location.href)+"&srcChannel=<?php echo API_CHANNEL ?>",
+        success: function(data) {
+            wx.config({
+                debug: false,
+                appId: '<?php echo APPID ?>',
+                timestamp: data.timestamp,
+                nonceStr: data.nonceStr,
+                signature: data.signature,
+                jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
+            });
+            wx.ready(function () {
+                wx.onMenuShareTimeline({
+                    title: '{$activity['sharetitle']}', // 分享标题
+                    link: 'https://'+domain+'/', // 分享链接
+                    imgUrl: 'https://'+domain+'/'+'{$activity['shareimg']}', // 分享图标
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        $('.cover').hide();
+                        $('.share-tip').hide();
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+                wx.onMenuShareAppMessage({
+                    title: '{$activity['sharetitle']}', // 分享标题
+                    desc: '{$activity['sharedesc']}', // 分享描述
+                    link: 'https://'+domain+'/', // 分享链接
+                    imgUrl: 'https://'+domain+'/'+'{$activity['shareimg']}', // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        $('.cover').hide();
+                        $('.share-tip').hide();
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            });
+        },
+        dataType: "jsonp"
+    });
+    $('.share-tip').click(function () {
+        $('.cover').hide();
+        $('.share-tip').hide();
+    });
+    $('img.pic_position').click(function () {
+        location.href = 'https://' + domain + '/';
+    });
+    $('.wardlist').on('click','.click-code',function(){
+        var Code = $(this).siblings('.codenumber').html();
+        selectId = parseInt($(this).siblings('.awardId').html());
+        $('.qrcode-pop .awardId').html(selectId);
+        // var myQRCode = new QRCode({
+        //     width : 280,
+        //     height : 280,
+        //     text: Code
+        // });
+        $('.cover1').show();
+        $('.qrcode-pop').show();
+        $('.qrcode').val(Code);
+
+    });
+    $('.wardlist').on('click','.show-code',function(){
+        selectId = parseInt($(this).siblings('.awardId').html());
+        $('.cove2r').show();
+        $('#coupon').show();
+        $('.text-rule').hide();
+        if (selectId >= 1 && selectId <= 8)
+            $('#rule'+parseInt(selectId)).show();
+        else
+            alert("奖品信息出错！");
+    })
+    $('.qrcode-pop').on('click','.couponWay',function(){
+        selectId = parseInt($(this).siblings('.awardId').html());
+        $('.cover2').show();
+        $('#coupon').show();
+        $('.text-rule').hide();
+        if (selectId >= 1 && selectId <= 8)
+            $('#rule'+parseInt(selectId)).show();
+        else
+            alert("奖品信息出错！");
+    })
+    $('.couponClose').click(function(){
+        $('.cover2').hide();
+        $('#coupon').hide();
+    })
+    $('.btnclose').click(function(){
+        $('.cover1').hide();
+        $('.qrcode-pop').hide();
+    });
+    $('.backindex').click(function(){
+        location.href = 'https://' + domain + '/';
+    });
+    $('.btnshare').click(function(){
+        $('.cover1').show();
+        $('.share-tip').show();
+    })
+    $('.coupon-change').click(function(){
+        if(awards[selectId-1].get_url)
+            window.location.href = awards[selectId-1].get_url;
+    })
+</script>
+</body>
+</html>
